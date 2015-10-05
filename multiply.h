@@ -11,7 +11,7 @@ inline int half(A x) {return x >> 1;}
 
 template <NonCommutativeAdditiveSemigroup A, Integer N>
 A multiply_accumulate_semigroup(A r, N n, A a) {
-  //precondition(n>=0);
+  assert (n >= 0);
   if (n==0) return r;
   while (true) {
     if (odd(n)) {
@@ -25,7 +25,7 @@ A multiply_accumulate_semigroup(A r, N n, A a) {
 
 template <NonCommutativeAdditiveSemigroup A, Integer N>
 A multiply_semigroup(N n, A a) {
-  //  precondition(n > 0);
+  assert (n > 0);
   while(!odd(n)) {
     a += a;
     n = half(n);
@@ -37,7 +37,7 @@ A multiply_semigroup(N n, A a) {
 
 template <NonCommutativeAdditiveMonoid A, Integer N>
 A multiply_monoid(N n, A a) {
-  //precondition(n>=0);
+  assert (n >= 0);
   if (n == 0) return A(0);
   return multiply_semigroup(n, a);
 }

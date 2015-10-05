@@ -1,4 +1,4 @@
-
+#include <functional>
 #define MonoidOperation typename
 #define SemigroupOperation typename
 #define GroupOperation typename
@@ -7,6 +7,7 @@
 #define MultiplicativeGroup typename
 #define NoncommutativeAdditiveMonoid typename
 #define MultiplicativeMonoid typename
+#define Regular typename
 
 template <typename A>
 inline bool odd(A x) {return x & 1;}
@@ -24,11 +25,11 @@ A power_accumulate_semigroup(A r, A a, N n, Op op) {
       if (n==1) return r;
     }
     n = half(n);
-    a = op(a);
+    a = op(a,a);
   }
 }
 
-template <regular A, Integer N, SemigroupOperation Op>
+template <Regular A, Integer N, SemigroupOperation Op >
 A power_semigroup(A a, N n, Op op) {
   //  precondition(n > 0);
   while(!odd(n)) {
@@ -40,7 +41,7 @@ A power_semigroup(A a, N n, Op op) {
     (a, op(a, a), half(n-1), op);
 }
 
-template <regular A, Integer N, MonoidOperation Op>
+template <Regular A, Integer N, MonoidOperation Op>
 A power_monoid(A a, N n, Op op) {
   //precondition(n >= 0);
   if (n == 0) return identity_element(op);
@@ -48,16 +49,16 @@ A power_monoid(A a, N n, Op op) {
 }
 
 template <NoncommutativeAdditiveMonoid T>
-T identity_element(std::plus<T> {
+T identity_element(std::plus<T>) {
     return T(0);
   }
 
 template <MultiplicativeMonoid T>
-T identity_element(std::multiplies<T> {
+T identity_element(std::multiplies<T>) {
     return T(1);
   }
 
-template <regular A, Integer N, GroupOperation Op>
+template <Regular A, Integer N, GroupOperation Op>
 A power_group(A a, N n, Op op) {
   if (n < 0) {
     n = -n;
@@ -72,13 +73,14 @@ std::negate<T> inverse_operation(std::plus<T>) {
 }
 
 template <MultiplicativeGroup T>
-  reciprocal<T> inverse_operation(std::multiplies<T>) {
-  return reciprocal<T>();
- }
-
-template <MultiplicativeGroup T>
 struct reciprocal : public std::unary_function<T, T> {
   T operator()(const T& x) const {
     return T(1)/x;
   }
 };
+
+template <MultiplicativeGroup T>
+reciprocal<T> inverse_operation(std::multiplies<T>) {
+  return reciprocal<T>();
+ }
+
