@@ -50,7 +50,7 @@ int main() {
   //m.printMatrix();
   matrix<unsigned long> pow(4);
   unsigned long long n;
-  std::cin >> n;std::cout << n << std::endl;
+  std::cin >> n;std::cout << half(n) << std::endl;
   pow = power_semigroup(m,n, op);
   pow.printMatrix();
 }

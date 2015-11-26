@@ -9,10 +9,10 @@
 #define MultiplicativeMonoid typename
 #define Regular typename
 
-template <typename A>
-inline bool odd(A x) {return x & 1;}
-template <typename A>
-inline int half(A x) {return x >> 1;}
+template <typename N>
+inline bool odd(N x) {return x & 1;}
+template <typename N>
+inline N half(N x) {return x >> 1;}
 
 template <Regular A, Integer N, SemigroupOperation Op>
 //requires (Domain<Op, A>)
