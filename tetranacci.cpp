@@ -31,25 +31,26 @@ void matrix<T>::getMatrix(const char *fname) {
 template <typename T>
 void matrix<T>::printMatrix() {
    for (size_t i=0;i<size;++i) {
-     for (size_t j=0;j<size;++j) if (data[i][j]>=INT32_MAX>>1) std::cout << '-' << '\t';
-	 else std::cout << data[i][j] << '\t';
+     for (size_t j=0;j<size;++j)// if (data[i][j]>=INT32_MAX>>1) std::cout << '-' << '\t';
+       //else 
+	   std::cout << data[i][j] << '\t';
       std::cout << std::endl;
    }
    std::cout << std::endl;
 }
 
 //necessary for linkage
-template void matrix<int>::getMatrix(const char *fname);
-template void matrix<int>::printMatrix();
+template void matrix<unsigned long>::getMatrix(const char *fname);
+template void matrix<unsigned long>::printMatrix();
 
-matrix<int> op(matrix<int> a, const matrix<int>& b) {return a*b;}
+matrix<unsigned long> op(matrix<unsigned long> a, const matrix<unsigned long>& b) {return a*b;}
 int main() {
-  matrix<int> m(4);
+  matrix<unsigned long> m(4);
   m.getMatrix("tetra.in");
-  m.printMatrix();
-  matrix<int> pow(4);
-  for (size_t n=2 ;n < 25; ++n) {
-    pow = power_semigroup(m,n, op);
-    pow.printMatrix();
-  }
+  //m.printMatrix();
+  matrix<unsigned long> pow(4);
+  unsigned long long n;
+  std::cin >> n;std::cout << n << std::endl;
+  pow = power_semigroup(m,n, op);
+  pow.printMatrix();
 }

@@ -23,8 +23,8 @@ class matrix {
      for (size_t j=0;j<size;++j) {
        std::vector<T> prod;
        for (size_t k=0;k<size;++k)
-	 prod.push_back(data[i][k] * b.data[k][j]);
-       a.data[i][j] = std::accumulate(prod.begin(), prod.end(), a.data[i][j]);
+	 prod.push_back((data[i][k] * b.data[k][j])%1000000007UL);
+       a.data[i][j] = std::accumulate(prod.begin(), prod.end(), a.data[i][j])%1000000007UL;
      }
    return a;
  }
